@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { chatUseCase } from './use-cases';
-import { ChatDto } from './dtos/chat.dto';
 import OpenAI from 'openai';
+import { Injectable } from '@nestjs/common';
+import { orthographyCheckUseCase } from './use-cases';
+import { OrthographyDto } from './dtos';
 
 @Injectable()
 export class GptService {
@@ -10,9 +10,15 @@ export class GptService {
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  async chat(chatDto: ChatDto) {
-    return await chatUseCase(this.openai, {
-      prompt: chatDto.prompt,
+  async orthographyCheck(orthographyDto: OrthographyDto) {
+    return await orthographyCheckUseCase(this.openai, {
+      prompt: orthographyDto.prompt,
     });
   }
+
+  // async chat(chatDto: ChatDto) {
+  //   return await chatUseCase(this.openai, {
+  //     prompt: chatDto.prompt,
+  //   });
+  // }
 }
